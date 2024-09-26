@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">UserBlinkitClone</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="blinkitit">blinkit<font color="#008B13">it </font></string>
+    <string name="india_s_last_minute_app">India\'s last minute app</string>
+    <string name="a_zomato_company">A ZOMATO COMPANY</string>
+</resources>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.SplashFragment"
+    android:background="#ffbe0b">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/blinkitit"
+            android:textSize="@dimen/_60ssp"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:includeFontPadding="false"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_16ssp"
+            android:textColor="@color/black"
+            android:includeFontPadding="false"
+            android:text="@string/india_s_last_minute_app"/>
+
+        <View
+            android:layout_width="@dimen/_180sdp"
+            android:layout_height="@dimen/_2sdp"
+            android:background="#7B7777"
+            android:layout_margin="@dimen/_22sdp"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_9ssp"
+            android:text="@string/a_zomato_company"
+            android:letterSpacing="0.01"
+            android:textStyle="bold"
+            android:textColor="#000000"/>
+
+    </LinearLayout>
+
+</FrameLayout>
