@@ -28,7 +28,7 @@ class SplashFragment : Fragment() {
 
         Handler(Looper.getMainLooper()).postDelayed({
             findNavController().navigate(R.id.action_splashFragment_to_signInFragment)
-        }, 6000)
+        }, 1000)
     }
 
     override fun onDestroyView() {
