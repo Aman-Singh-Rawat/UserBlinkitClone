@@ -1,3 +1,27 @@
 # Default ignored files
 /shelf/
-/workspace.xml
+workspace.xml
+
+# Gradle files
+/.gradle/
+/build/
+*/build/
+
+# Local configuration files
+/local.properties
+
+# Android Studio files
+/.idea/
+*.iml
+*.hprof
+
+# Gradle Wrapper files
+gradlew
+gradlew.bat
+
+# Miscellaneous
+*.log
+*.tmp
+*.temp
+*.DS_Store
+*.swp
