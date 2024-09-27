@@ -36,7 +36,7 @@ class OTPFragment : Fragment() {
         binding.tvUserNumber.text = "+91 $userNumber"
         setUpEnteringOtp()
         binding.otpToolbar.setNavigationOnClickListener {
-            findNavController().navigateUp()
+            findNavController().navigate(R.id.action_OTPFragment_to_signInFragment)
         }
     }
 
