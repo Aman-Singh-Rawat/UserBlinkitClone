@@ -3,6 +3,7 @@ package com.example.userblinkitclone.fragments
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.userblinkitclone.R
 import com.example.userblinkitclone.databinding.FragmentOTPBinding
+import com.example.userblinkitclone.models.Users
 import com.example.userblinkitclone.util.Utils
 import com.example.userblinkitclone.viewmodels.AuthViewModel
 import kotlinx.coroutines.flow.filter
@@ -22,7 +24,7 @@ class OTPFragment : Fragment() {
     private var _binding: FragmentOTPBinding? = null
     private val binding: FragmentOTPBinding get() = _binding!!
     private val viewModel: AuthViewModel by viewModels()
-    private val userNumber by lazy { arguments?.getString("number") ?: ""}
+    private val userNumber by lazy { arguments?.getString("number") ?: "" }
 
     private var editTextArray: Array<EditText> = emptyArray()
 
@@ -54,7 +56,7 @@ class OTPFragment : Fragment() {
     private fun onLoginButtonClicked() {
         binding.btnLogin.setOnClickListener {
             Utils.showDialog(requireContext(), "Signing you...")
-            val otp = editTextArray.joinToString ("") {it.text.toString()}
+            val otp = editTextArray.joinToString("") { it.text.toString() }
 
             if (otp.length < editTextArray.size) {
                 Utils.showToast(requireContext(), "Please enter right otp")
@@ -66,10 +68,17 @@ class OTPFragment : Fragment() {
     }
 
     private fun verifyOtp(otp: String) {
-        viewModel.signInWithPhoneAuthCredential(otp, userNumber, {
-            Utils.hideDialog()
-            Utils.showToast(requireContext(), it)
-        }) { Utils.showToast(requireContext(), it) }
+        Log.d("debugging", "userId is:: ${Utils.getUserCurrentId()}")
+        val user = Users(
+            uId = Utils.getUserCurrentId(),
+            userPhoneNumber = userNumber,
+            userAddress = null
+        )
+        viewModel.signInWithPhoneAuthCredential(
+            otp, userNumber, user, //Parameters of signInWith.. method
+            { Utils.hideDialog(); Utils.showToast(requireContext(), it) }, //Its onSuccess Method
+            { Utils.hideDialog(); Utils.showToast(requireContext(), it) } // Its onFailure method
+        )
     }
 
     private fun sendOTP() {
@@ -89,7 +98,8 @@ class OTPFragment : Fragment() {
     }
 
     private fun setUpEnteringOtp() {
-        editTextArray = arrayOf(binding.etOtpOne, binding.etOtpTwo,
+        editTextArray = arrayOf(
+            binding.etOtpOne, binding.etOtpTwo,
             binding.etOtpThree, binding.etOtpFour,
             binding.etOtpFive, binding.etOtpSix
         )
@@ -102,12 +112,12 @@ class OTPFragment : Fragment() {
                 override fun afterTextChanged(s: Editable?) {
                     s?.let {
                         if (s.length == 1) {
-                            if (index < editTextArray.size-1)
-                                editTextArray[index+1].requestFocus()
+                            if (index < editTextArray.size - 1)
+                                editTextArray[index + 1].requestFocus()
 
                         } else if (s.length == 0) {
                             if (index > 0)
-                                editTextArray[index-1].requestFocus()
+                                editTextArray[index - 1].requestFocus()
                         }
                     }
                 }
