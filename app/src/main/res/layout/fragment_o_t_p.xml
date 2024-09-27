@@ -173,12 +173,12 @@
     </LinearLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnContinue"
+        android:id="@+id/btnLogin"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_50sdp"
         android:layout_marginHorizontal="@dimen/_12sdp"
         android:backgroundTint="@color/blue"
-        android:text="Continue"
+        android:text="Login"
         android:textColor="#FFFFFF"
         app:cornerRadius="@dimen/_9sdp"
         android:layout_marginTop="@dimen/_20sdp"

@@ -8,15 +8,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.userblinkitclone.R
 import com.example.userblinkitclone.databinding.FragmentOTPBinding
+import com.example.userblinkitclone.util.Utils
+import com.example.userblinkitclone.viewmodels.AuthViewModel
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.launch
 
 class OTPFragment : Fragment() {
     private var _binding: FragmentOTPBinding? = null
     private val binding: FragmentOTPBinding get() = _binding!!
-
+    private val viewModel: AuthViewModel by viewModels()
     private val userNumber by lazy { arguments?.getString("number") ?: ""}
+
+    private var editTextArray: Array<EditText> = emptyArray()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,14 +42,54 @@ class OTPFragment : Fragment() {
 
     private fun initViews() {
         binding.tvUserNumber.text = "+91 $userNumber"
-        setUpEnteringOtp()
         binding.otpToolbar.setNavigationOnClickListener {
             findNavController().navigate(R.id.action_OTPFragment_to_signInFragment)
+        }
+
+        setUpEnteringOtp()
+        sendOTP()
+        onLoginButtonClicked()
+    }
+
+    private fun onLoginButtonClicked() {
+        binding.btnLogin.setOnClickListener {
+            Utils.showDialog(requireContext(), "Signing you...")
+            val otp = editTextArray.joinToString ("") {it.text.toString()}
+
+            if (otp.length < editTextArray.size) {
+                Utils.showToast(requireContext(), "Please enter right otp")
+            } else {
+                editTextArray.forEach { it.text?.clear(); it.clearFocus() }
+                verifyOtp(otp)
+            }
+        }
+    }
+
+    private fun verifyOtp(otp: String) {
+        viewModel.signInWithPhoneAuthCredential(otp, userNumber, {
+            Utils.hideDialog()
+            Utils.showToast(requireContext(), it)
+        }) { Utils.showToast(requireContext(), it) }
+    }
+
+    private fun sendOTP() {
+        Utils.showDialog(requireContext(), "Sending OTP...")
+        viewModel.sendOTP(userNumber, requireActivity())
+        viewModel.apply {
+            sendOTP(userNumber, requireActivity())
+            lifecycleScope.launch {
+                otpSent.collect {
+                    if (it) {
+                        Utils.hideDialog()
+                        Utils.showToast(requireContext(), "Otp Successfully Send...")
+                    }
+                }
+            }
         }
     }
 
     private fun setUpEnteringOtp() {
-        val editTextArray = arrayOf(binding.etOtpOne, binding.etOtpTwo,
+        editTextArray = arrayOf(binding.etOtpOne, binding.etOtpTwo,
             binding.etOtpThree, binding.etOtpFour,
             binding.etOtpFive, binding.etOtpSix
         )
