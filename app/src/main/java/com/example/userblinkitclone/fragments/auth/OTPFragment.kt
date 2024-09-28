@@ -71,7 +71,7 @@ class OTPFragment : Fragment() {
     private fun verifyOtp(otp: String) {
         Log.d("debugging", "userId is:: ${Utils.getUserCurrentId()}")
         val user = Users(
-            uId = Utils.getUserCurrentId(),
+            uId = null,
             userPhoneNumber = userNumber,
             userAddress = null
         )

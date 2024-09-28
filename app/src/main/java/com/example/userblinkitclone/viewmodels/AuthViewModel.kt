@@ -64,12 +64,12 @@ class AuthViewModel: ViewModel() {
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     // Successful login
-
+                    user.uId = Utils.getUserCurrentId()
                     if (user.uId != null) {
                         FirebaseDatabase.getInstance("https://blinkit-clone-b8338-default-rtdb.asia-southeast1.firebasedatabase.app/")
                             .getReference("AllUsers")
                             .child("Users")
-                            .child(user.uId)
+                            .child(user.uId!!)
                             .setValue(user)
                             .addOnCompleteListener { dbTask ->
                                 if (dbTask.isSuccessful) {
