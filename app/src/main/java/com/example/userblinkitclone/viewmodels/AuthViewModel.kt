@@ -12,6 +12,7 @@ import com.google.firebase.auth.PhoneAuthProvider
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import java.lang.Thread.State
 import java.util.concurrent.TimeUnit
 
 class AuthViewModel: ViewModel() {
@@ -19,13 +20,19 @@ class AuthViewModel: ViewModel() {
     private val _otpSent = MutableStateFlow(false)
     val otpSent: StateFlow<Boolean> = _otpSent
 
+    private val _isACurrentUser = MutableStateFlow(false)
+    val isACurrentUser: StateFlow<Boolean> = _isACurrentUser
+
+    init {
+        Utils.getAuthInstance().currentUser?.let { _isACurrentUser.value = true }
+    }
+
     fun sendOTP(userNumber: String, activity: Activity) {
         val callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 
             override fun onVerificationCompleted(credential: PhoneAuthCredential) {}
 
             override fun onVerificationFailed(e: FirebaseException) {
-                Log.e("debugging","Verification failed: ${e.message}")
                 _otpSent.value = false
             }
 
@@ -35,7 +42,6 @@ class AuthViewModel: ViewModel() {
             ) {
                 _verificationId.value = verificationId
                 _otpSent.value = true
-                Log.d("debugging", "Verification code sent successfully.")
             }
         }
 
@@ -54,19 +60,12 @@ class AuthViewModel: ViewModel() {
 
         val credential = PhoneAuthProvider.getCredential(_verificationId.value.toString(), otp)
 
-        Log.d("debugging", "userId in signInWithPhoneAuthCredential :: ${Utils.getUserCurrentId()}")
-
         Utils.getAuthInstance().signInWithCredential(credential)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     // Successful login
-                    Log.d("debugging", "task.isSuccessful :: ${Utils.getUserCurrentId()}")
-                    Log.d("debugging", "uId is:: ${user.uId}")
-                    Log.d("debugging", "address is:: ${user.userAddress}")
-                    Log.d("debugging", "phone number is:: ${user.userPhoneNumber}")
 
                     if (user.uId != null) {
-                        Log.d("debugging", "user id is not null")
                         FirebaseDatabase.getInstance("https://blinkit-clone-b8338-default-rtdb.asia-southeast1.firebasedatabase.app/")
                             .getReference("AllUsers")
                             .child("Users")
@@ -74,22 +73,18 @@ class AuthViewModel: ViewModel() {
                             .setValue(user)
                             .addOnCompleteListener { dbTask ->
                                 if (dbTask.isSuccessful) {
-                                    Log.d("debugging", "Data written successfully")
                                     onSuccess.invoke("Successfully Logged In")
                                 } else {
-                                    Log.e("debugging", "Failed to write to database: ${dbTask.exception?.message}")
                                     onFailure.invoke(dbTask.exception?.message.toString())
                                 }
                             }
                             .addOnFailureListener { exception ->
-                                Log.e("debugging", "Database operation failed: ${exception.message}")
                                 onFailure.invoke(exception.message.toString())
                             }
                     } else {
-                        Log.d("debugging", "user id is null")
+                        onFailure.invoke("User is null")
                     }
                 } else {
-                    Log.e("debugging", task.exception?.message.toString())
                     onFailure.invoke(task.exception?.message.toString())
                 }
             }
