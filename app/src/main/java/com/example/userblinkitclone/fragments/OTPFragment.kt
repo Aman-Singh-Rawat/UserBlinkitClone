@@ -1,5 +1,6 @@
 package com.example.userblinkitclone.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -13,6 +14,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.userblinkitclone.R
+import com.example.userblinkitclone.activities.UsersMainActivity
 import com.example.userblinkitclone.databinding.FragmentOTPBinding
 import com.example.userblinkitclone.models.Users
 import com.example.userblinkitclone.util.Utils
@@ -76,7 +78,11 @@ class OTPFragment : Fragment() {
         )
         viewModel.signInWithPhoneAuthCredential(
             otp, userNumber, user, //Parameters of signInWith.. method
-            { Utils.hideDialog(); Utils.showToast(requireContext(), it) }, //Its onSuccess Method
+            {
+                Utils.hideDialog(); Utils.showToast(requireContext(), it)
+                startActivity(Intent(requireActivity(), UsersMainActivity::class.java))
+                requireActivity().finish()
+            }, //Its onSuccess Method
             { Utils.hideDialog(); Utils.showToast(requireContext(), it) } // Its onFailure method
         )
     }
