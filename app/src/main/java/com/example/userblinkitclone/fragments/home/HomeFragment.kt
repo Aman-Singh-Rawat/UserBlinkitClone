@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.userblinkitclone.R
@@ -42,9 +43,16 @@ class HomeFragment : Fragment() {
     }
 
     private fun setAllCategories() {
-        binding.rvCategory.adapter = AdapterCategory(Constants.getCategoryList)
+        binding.rvCategory.adapter = AdapterCategory(Constants.getCategoryList, ::onCategoryIconClicked)
 
     }
+
+    private fun onCategoryIconClicked(category: Category) {
+        findNavController().navigate(R.id.action_homeFragment_to_categoryFragment,
+            bundleOf("category" to category.title)
+        )
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

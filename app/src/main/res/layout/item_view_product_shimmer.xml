@@ -47,9 +47,10 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_product_quantity"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/_60sdp"
                 android:layout_height="wrap_content"
                 android:background="#DDDDDD"
+                android:layout_marginVertical="@dimen/_4sdp"
                 android:textSize="@dimen/_15ssp"/>
 
             <RelativeLayout
@@ -123,9 +124,10 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_product_quantity_two"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/_60sdp"
                 android:layout_height="wrap_content"
                 android:background="#DDDDDD"
+                android:layout_marginVertical="@dimen/_4sdp"
                 android:textSize="@dimen/_15ssp"/>
 
             <RelativeLayout

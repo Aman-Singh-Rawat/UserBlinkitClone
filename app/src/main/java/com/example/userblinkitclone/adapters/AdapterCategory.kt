@@ -6,16 +6,21 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.userblinkitclone.databinding.ItemViewProductCategoryBinding
 import com.example.userblinkitclone.models.Category
 
-class AdapterCategory(val categoryList: ArrayList<Category>):
+class AdapterCategory(
+    private val categoryList: ArrayList<Category>,
+    private val onCategoryIconClicked: (Category) -> Unit) :
     RecyclerView.Adapter<AdapterCategory.CategoryViewHolder>() {
-    inner class CategoryViewHolder(val binding: ItemViewProductCategoryBinding): RecyclerView.ViewHolder(binding.root) {
+    inner class CategoryViewHolder(val binding: ItemViewProductCategoryBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
         return CategoryViewHolder(
-            ItemViewProductCategoryBinding.inflate(LayoutInflater
-                .from(parent.context), parent, false)
+            ItemViewProductCategoryBinding.inflate(
+                LayoutInflater
+                    .from(parent.context), parent, false
+            )
         )
     }
 
@@ -26,6 +31,9 @@ class AdapterCategory(val categoryList: ArrayList<Category>):
         holder.binding.apply {
             ivCategoryImage.setImageResource(category.image)
             tvCategoryTitle.text = category.title
+        }
+        holder.itemView.setOnClickListener {
+            onCategoryIconClicked(category)
         }
     }
 }

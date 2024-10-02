@@ -56,7 +56,6 @@ class SearchFragment : Fragment() {
     }
 
     private fun getAllProducts() {
-        // Check if binding is initialized
         if (_binding == null) return
 
         binding.shimmerViewContainer.visibility = View.VISIBLE

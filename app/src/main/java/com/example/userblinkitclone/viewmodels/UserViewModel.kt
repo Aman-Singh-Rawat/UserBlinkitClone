@@ -36,4 +36,29 @@ class UserViewModel : ViewModel() {
         db.addValueEventListener(eventListener)
         awaitClose { db.removeEventListener(eventListener) }
     }
+
+    fun getCategoryProduct(category: String) : Flow<List<Product>> = callbackFlow {
+        val db = firebaseDatabaseInstance.getReference("Admins")
+            .child("ProductCategory/${category}")
+
+        val eventListener = object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val products = ArrayList<Product>()
+                for (product in snapshot.children) {
+                    val value = product.getValue(Product::class.java)
+                    if (value != null) {
+                        products.add(value)
+                    }
+                }
+                trySend(products)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        }
+        db.addValueEventListener(eventListener)
+        awaitClose { db.removeEventListener(eventListener) }
+    }
 }
