@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="@dimen/_1sdp">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_product"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_240sdp"
+        android:backgroundTint="@color/white"
+        app:cardCornerRadius="@dimen/_12sdp"
+        android:elevation="0dp"
+        app:cardUseCompatPadding="true"
+        style="@style/Widget.Material3.CardView.Filled"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="@dimen/_5sdp">
+
+            <com.denzcoskun.imageslider.ImageSlider
+                android:id="@+id/iv_image_slider"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_140sdp"
+                app:iss_auto_cycle="false"
+                app:iss_text_align="center"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_product_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_15ssp"
+                android:text="Nandini Toned Fresh Milk... "/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_product_quantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="500ml"
+                android:textSize="@dimen/_13ssp"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvProductPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$25"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:textSize="@dimen/_13ssp"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvEdit"
+                    android:layout_width="@dimen/_64sdp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:text="Edit"
+                    android:gravity="center"
+                    android:padding="@dimen/_5sdp"
+                    android:textColor="@color/green"
+                    android:textStyle="bold"
+                    android:background="@drawable/bg_tv_edit"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"/>
+
+                <LinearLayout
+                    android:id="@+id/ll_product_count"
+                    android:layout_width="@dimen/_64sdp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:orientation="horizontal"
+                    android:text="Edit"
+                    android:weightSum="3"
+
+                    android:gravity="center"
+                    android:backgroundTint="@color/green"
+                    android:textStyle="bold"
+                    android:background="@drawable/bg_tv_edit"
+                    android:foreground="?attr/selectableItemBackground">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_product_decrement"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="-"
+                        android:textAlignment="center"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_19ssp"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_product_count"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="0"
+                        android:textAlignment="center"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_19ssp"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_increment"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="+"
+                        android:textAlignment="center"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_19ssp"/>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+        </LinearLayout>
+
+
+
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>
