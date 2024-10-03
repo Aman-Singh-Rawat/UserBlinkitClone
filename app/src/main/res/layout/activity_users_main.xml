@@ -20,4 +20,85 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.5"
         app:navGraph="@navigation/users_nav_graph" />
+
+    <LinearLayout
+        android:id="@+id/ll_cart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:visibility="gone"
+        android:padding="@dimen/_12sdp"
+        android:background="@drawable/bg_bottom_sheet"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_product_img"
+                android:layout_width="@dimen/_32sdp"
+                android:layout_height="@dimen/_32sdp"
+                android:src="@drawable/cart"
+                android:padding="@dimen/_3sdp"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_number_of_product_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="0"
+                android:textSize="@dimen/_18ssp"
+                android:layout_marginStart="@dimen/_12sdp"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_2sdp"
+                android:text="ITEM"
+                android:textSize="@dimen/_18ssp"/>
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:layout_width="@dimen/_19sdp"
+                android:layout_height="@dimen/_19sdp"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_6sdp"
+                android:src="@drawable/ic_drop_up"
+                android:background="@android:color/transparent"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:gravity="center"
+            android:background="@drawable/bg_product_count">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Next"
+                android:includeFontPadding="false"
+                android:layout_gravity="center"
+                android:textColor="#FFFFFF"
+                android:textSize="@dimen/_16ssp"
+                android:textStyle="bold"/>
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:layout_width="@dimen/_19sdp"
+                android:layout_height="@dimen/_19sdp"
+                android:layout_gravity="center"
+                android:background="@android:color/transparent"
+                android:layout_marginStart="@dimen/_6sdp"
+                android:src="@drawable/ic_arrow_right"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
