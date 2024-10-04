@@ -61,11 +61,11 @@
                     android:textSize="@dimen/_13ssp"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvEdit"
+                    android:id="@+id/tvAdd"
                     android:layout_width="@dimen/_64sdp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:text="Edit"
+                    android:text="ADD"
                     android:gravity="center"
                     android:padding="@dimen/_5sdp"
                     android:textColor="@color/green"
