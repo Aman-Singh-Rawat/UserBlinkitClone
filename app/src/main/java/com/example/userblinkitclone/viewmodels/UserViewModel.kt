@@ -16,10 +16,13 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 
 class UserViewModel(application: Application) : AndroidViewModel(application) {
+    //initialization
     private var sharedPreferences: SharedPreferences = application.getSharedPreferences("My_Pref", MODE_PRIVATE)
     private val firebaseDatabaseInstance = FirebaseDatabase.getInstance(
         "https://blinkit-clone-b8338-default-rtdb.asia-southeast1.firebasedatabase.app/"
     )
+
+    //Firebase Integration
     fun fetchAllProducts(): Flow<List<Product>> = callbackFlow {
         val db = firebaseDatabaseInstance.getReference("Admins").child("AllProducts")
 
@@ -68,6 +71,7 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
         awaitClose { db.removeEventListener(eventListener) }
     }
 
+    //SharedPreference
     fun savingCartItemCount(itemCount: Int) {
         sharedPreferences.edit().putInt("itemCount", itemCount).apply()
     }
