@@ -90,6 +90,7 @@ class CategoryFragment : Fragment() {
         productBinding.tvProductCount.text = itemCount.toString()
 
         cartListener?.showCartLayout(1)
+        cartListener?.savingCartItemCount(1)
     }
 
     private fun onIncrementButtonClicked(product: Product, productBinding: ItemViewProductBinding) {
@@ -99,6 +100,7 @@ class CategoryFragment : Fragment() {
         productBinding.tvProductCount.text = itemCountIncrement.toString()
 
         cartListener?.showCartLayout(1)
+        cartListener?.savingCartItemCount(1)
     }
 
     private fun onDecrementButtonClicked(product: Product, productBinding: ItemViewProductBinding) {
@@ -113,6 +115,7 @@ class CategoryFragment : Fragment() {
             productBinding.tvProductCount.text = "0"
         }
         cartListener?.showCartLayout(-1)
+        cartListener?.savingCartItemCount(-1)
     }
 
     override fun onAttach(context: Context) {
