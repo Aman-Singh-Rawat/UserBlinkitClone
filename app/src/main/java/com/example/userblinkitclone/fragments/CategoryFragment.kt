@@ -15,6 +15,7 @@ import com.example.userblinkitclone.adapters.ProductAdapter
 import com.example.userblinkitclone.databinding.FragmentCategoryBinding
 import com.example.userblinkitclone.databinding.ItemViewProductBinding
 import com.example.userblinkitclone.models.Product
+import com.example.userblinkitclone.roomdb.CartProducts
 import com.example.userblinkitclone.viewmodels.UserViewModel
 import kotlinx.coroutines.launch
 
@@ -90,7 +91,29 @@ class CategoryFragment : Fragment() {
         productBinding.tvProductCount.text = itemCount.toString()
 
         cartListener?.showCartLayout(1)
-        cartListener?.savingCartItemCount(1)
+
+        product.itemCount = itemCount
+        lifecycleScope.launch {
+            cartListener?.savingCartItemCount(1)
+            saveProductInRoomDb(product)
+        }
+    }
+
+    private suspend fun saveProductInRoomDb(product: Product) {
+        val cartProduct = CartProducts(
+            productId = product.productRandomId,
+            productTitle = product.productTitle,
+            productQuantity = product.productQuantity.toString() + product.productUnit.toString(),
+            productPrice = "₹${product.productPrice}",
+            productCount = product.itemCount,
+            productStock = product.productStock,
+            productImage = product.productImageUris?.get(0),
+            productCategory = product.productCategory,
+            adminUid = product.adminUid
+        )
+
+        viewModel.insertCartProduct(cartProduct)
+        //TODO ALSO HERE USE lifecycleScope
     }
 
     private fun onIncrementButtonClicked(product: Product, productBinding: ItemViewProductBinding) {
@@ -100,22 +123,34 @@ class CategoryFragment : Fragment() {
         productBinding.tvProductCount.text = itemCountIncrement.toString()
 
         cartListener?.showCartLayout(1)
-        cartListener?.savingCartItemCount(1)
+
+        product.itemCount = itemCountIncrement
+        lifecycleScope.launch {
+            cartListener?.savingCartItemCount(1)
+            saveProductInRoomDb(product)
+        }
     }
 
     private fun onDecrementButtonClicked(product: Product, productBinding: ItemViewProductBinding) {
         var itemCountDecrement = productBinding.tvProductCount.text.toString().toInt()
         itemCountDecrement--
 
+        product.itemCount = itemCountDecrement
+        lifecycleScope.launch {
+            cartListener?.savingCartItemCount(-1)
+            saveProductInRoomDb(product)
+        }
+
         if (itemCountDecrement > 0) {
             productBinding.tvProductCount.text = itemCountDecrement.toString()
         } else {
+            lifecycleScope.launch { viewModel.deleteCartProduct(product.productRandomId) }
             productBinding.tvAdd.visibility = View.VISIBLE
             productBinding.llProductCount.visibility = View.GONE
             productBinding.tvProductCount.text = "0"
         }
         cartListener?.showCartLayout(-1)
-        cartListener?.savingCartItemCount(-1)
+
     }
 
     override fun onAttach(context: Context) {
